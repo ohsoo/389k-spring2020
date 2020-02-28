@@ -1,3 +1,117 @@
-<!-- We have purposely given you an empty file. We want you to get some practice with creating all the tags from the ground up.
- -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- meta-info here -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+	<style>
 
+	header {
+		text-align: left;
+		color: black;
+		background: url("https://live.staticflickr.com/804/26537128117_85375fc538_b.jpg");
+    		background-size: 30%;
+	}
+	li {
+		display: inline;
+		padding: 0px 10px 0px 10px;
+	}
+	a {
+    		color: white;
+		text-decoration: none;
+    		background-color: black;
+    		padding: 5px 100px 5px 100px;
+	}
+	h1 {
+		font-size: 70px;
+		margin: 0 0 0 50px;
+	}
+	h2 {
+		text-align: center;
+		text-decoration: underline;	
+	}
+	img {
+		margin: 50px 0 50px 50px;
+		border: 5px solid black;
+		background-color: brown;
+	}
+	ul {
+		text-align: center;
+		border: 10px solid black;
+		background-color: black;
+	}
+	article {
+    		width: 500px;
+    		padding: 20px;
+		margin: 0 auto;
+	}
+	@media (max-width: 500px) {
+    		h1 {
+        		font-size: 36px;
+    		}
+    		li {
+        		display: block; /* Makes them on top of each other */
+        		padding: 7px 0 7px 0; /* Change the padding to top and bottom now */
+    		}
+    		a {
+        		padding: 5px 40% 5px 40%; /* Make them easier to click on */
+    		}
+	}
+	.center {
+   		margin-left:auto; 
+    		margin-right:auto;
+  	}	
+	.about-header {
+		font-family: Georgia, Verdana;
+	}
+	table, th, td {
+		margin: 0 0 0 50px;
+ 		border: 1px solid black;
+	}
+	#answer {
+		font-style: italic;
+	}
+	#question {
+		font-weight: bold;
+	}
+	
+	</style>
+</head>
+<body>
+    <!-- page content here -->
+	<header>
+		<img src="https://scontent-iad3-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/		p750x750/47583322_937068203161835_4013241262767515108_n.jpg?_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=111&_nc_ohc=KU8dwY2P1i8AX8wMlYk&oh=8cc738e3877e27754badfab8203a7f24&oe=5EBE6B54" width="300px" height="380px">
+		<ul>
+    			<li>
+        			<a href="">Home</a>
+    			</li>
+    			<li>
+        			<a href="https://www.instagram.com/ohbsoo/">IG</a>
+    			</li>
+			<li>
+				<a href="https://www.coolmathgames.com/0-run">Time Waster</a>
+			</li>
+		</ul>
+	</header>
+
+	<h1><marquee>SOO OH</marquee></h1>
+
+	<h2 class="about-header">About Me</h2>
+	
+	<table class="center">
+		<tbody>
+			<tr>
+				<td id="question">Nationality</td>
+				<td id="answer">Korean</td>
+			</tr>
+			<tr>
+				<td id="question">Age</td>
+				<td id="answer">20</td>
+			</tr>
+			<tr>
+				<td id="question">Year</td>
+				<td id="answer">3</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
