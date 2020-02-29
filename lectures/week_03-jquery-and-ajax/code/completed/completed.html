@@ -40,8 +40,18 @@
         // })
 
         $("#search_button").on("click", function(){
-            $("#article_container").append("<article><h2>Some content</h2><p>More content</p></article>");
+            var num = "06"
+            var json = $.get(("https://api.census.gov/data/2013/language?get=EST,LANLABEL,NAME&for=state:" + num + "&LAN=625"), function(data){
+                var num = data[1][0];
+                numWithCommas = withCommas(num);
+
+                $("#article_container").append("<article><h2>" + numWithCommas + "</h2></article>")
+            })
         })
+
+        function withCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
         // $("#search_button").on("click", function(){
         //     var categoryValue = $("#category_field").val();

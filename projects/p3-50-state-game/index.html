@@ -16,21 +16,20 @@
 </head>
 
 <body>
-    <article>
-        <header>
-            <h1 id="main_header"><u>50 STATE GAME</u></h1>
-        </header>
-        <button id="start_button">START</button>
-        <h3 id="score" hidden></h3>
-        <h3>
-            Enter a state:
-            <input id="state_field" type="text" placeholder="PRESS START" disabled=true>
-        </h3>
-        <div id="states_container"></div>
-        <h3 id="game_over" hidden><font color="red">GAME OVER</font></h3>
-        <h3 id="timer" hidden></h3>
-        <div id="missed_states"></div>
-    </article>
+    <header>
+        <h1 id="main_header"><u>50 STATE GAME</u></h1>
+    </header>
+    <button id="start_button">START</button>
+    <h3 id="score" hidden></h3>
+    <h3>
+        Enter a state:
+        <input id="state_field" type="text" placeholder="PRESS START" disabled=true>
+    </h3>
+    <div id="states_container"></div>
+    <h3 id="game_over" hidden><font color="red">GAME OVER</font></h3>
+    <h3 id="timer" hidden></h3>
+    <div id="missed_states"></div>
+
 
     <!--
     1. Implement the input element.
@@ -64,7 +63,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     <script src="index.js" type="text/javascript"></script>
     <script type="text/javascript">
-        console.log(abvMap);
         var lowercase_states;
         var numStates = states.length;
         var score;
@@ -77,6 +75,7 @@
                 return elem.toLowerCase();
             })
             score = 0;
+            $("#game_over").hide();
 
             $("#states_container").empty();
             $("#missed_states").empty();
@@ -101,10 +100,25 @@
             var index = -1;
             index = $.inArray($('#state_field').val().toLowerCase(), lowercase_states);
             if (index != -1) {
-                var state = states[index];
-
                 //add to list displayed
-                $("#states_container").append("<article><p> -" + state + "<p></article>");
+                var state = $("<li></li>").text(states[index]);
+                $("#states_container").append(state);
+
+                var stateCode = abvMap[states[index]];
+                var numWithCommas;
+                var json = $.get(("https://api.census.gov/data/2013/language?get=EST,LANLABEL,NAME&for=state:" + stateCode + "&LAN=625"), function(data){
+                    var num = data[1][0];
+                    numWithCommas = withCommas(num);
+                })
+
+                $(state).hover(
+                    function() {
+                        var spanishSpeakers = $("<span></span>").text("    (" + numWithCommas + " Spanish speakers)");
+                        $(this).append(spanishSpeakers);
+                    }, function() {
+                        $(this).find("span").last().remove();
+                    }
+                );
                 $("#state_field").val('');
 
                 //update states array
@@ -119,7 +133,6 @@
                     playing = false;
                     setTimeout(gameWon, 100);
                 } 
-                console.log(states);
                 console.log(lowercase_states);
             }
         })
@@ -127,7 +140,8 @@
         function gameWon() {
             alert("YOU WIN!");
             gameReset();
-            $("#score").text("You named every state! Would you like to try again and beat your time of " + seconds + " seconds?");
+            var timeScore = 20 - seconds;
+            $("#score").text("You named every state! Would you like to try again and beat your time of " + timeScore + " seconds?");
         }
 
         function gameReset() {
@@ -159,7 +173,7 @@
                         gameReset();
 
                         //show score instead of "x states left"
-                        $("#score").text("Score: " + score + "/50");
+                        $("#score").text("Score: " + score + "/" + numStates);
 
                         //show the states that were missed
                         $("#missed_states").show()
@@ -167,13 +181,35 @@
                         $("#missed_states").append("<b>YOU FORGOT ABOUT:</b>");
                         for (var i = 0; i < states.length; i++) {
                             if (lowercase_states[i] !== undefined) {
-                                $("#missed_states").append("<article><p> -" + states[i] + "<p></article>");
+                                var state = $("<li></li>").text(states[i]);
+                                $("#missed_states").append(state);
+
+                                var stateCode = abvMap[states[i]];
+                                var numWithCommas;
+                                var json = $.get(("https://api.census.gov/data/2013/language?get=EST,LANLABEL,NAME&for=state:" + stateCode + "&LAN=625"), function(data){
+                                    var num = data[1][0];
+                                    numWithCommas = withCommas(num);
+                                })
+
+                                $(state).hover(
+                                    function() {
+                                        var spanishSpeakers = $("<span></span>").text("    (" + numWithCommas + " Spanish speakers)");
+                                        $(this).append(spanishSpeakers);
+                                    }, function() {
+                                        $(this).find("span").last().remove();
+                                    }
+                                );
+
                             }
                         }
                     }
                 }
             }
             tick();
+        }
+
+        function withCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
     </script>
