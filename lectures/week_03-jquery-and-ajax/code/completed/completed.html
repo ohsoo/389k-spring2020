@@ -39,16 +39,16 @@
         //     alert(inputValue);
         // })
 
-        // $("#search_button").on("click", function(){
-        //     $("#article_container").append("<article><h2>Some content</h2><p>More content</p></article>");
-        // })
-
         $("#search_button").on("click", function(){
-            var categoryValue = $("#category_field").val();
-            $.get("https://api.chucknorris.io/jokes/random?category=" + categoryValue, function(data){
-                $("#article_container").append("<article><h2>" + data.value + "</h2></article>")
-            })
+            $("#article_container").append("<article><h2>Some content</h2><p>More content</p></article>");
         })
+
+        // $("#search_button").on("click", function(){
+        //     var categoryValue = $("#category_field").val();
+        //     $.get("https://api.chucknorris.io/jokes/random?category=" + categoryValue, function(data){
+        //         $("#article_container").append("<article><h2>" + data.value + "</h2></article>")
+        //     })
+        // })
 
         $("#clear_button").on("click", function(){
             $("#article_container").empty();
