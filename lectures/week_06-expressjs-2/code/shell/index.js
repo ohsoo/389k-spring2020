@@ -2,16 +2,20 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var operations = require("./operations");
+var exphbs = require('express-handlebars');
 
 var contacts = {}
 
-
+app.use('/public', express.static('public'));
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', function(req, res) {
-	res.send('Hello World!');
+	// res.sendFile('./public/index.html', { root: __dirname });
+    res.render('first')
 });
 
 app.get('/factorial', function(req, res) {
@@ -37,19 +41,31 @@ app.get('/sqroot', function(req, res) {
     res.send(operations.sqroot(number) + "");
 })
 
+var past = []
 app.get("/operation/:op", function(req, res) {
     var op = req.params.op;
     var number = req.query.number;
+    error = false
 
-    if (!operations[op]) {
-        return res.send("Not a valid operation");
-    }
-    if (!number) {
-        return res.send("Please send a number");
+    if (!operations[op] || !number) {
+        error = true
     }
 
     number = parseInt(number);
-    res.send(operations[op](number) + "");
+
+    if (error) {
+        past.push("BAD OPERATION")
+    } else {
+        past.push(op + " on " + number + ": " + operations[op](number))
+    }
+    // res.send(operations[op](number) + "");
+    res.render('operation', {
+        oper: op,
+        error: error,
+        inp: number,
+        result: error ? null : operations[op](number),
+        past: past
+    })
 })
 
 app.get("/contacts", function(req, res) {

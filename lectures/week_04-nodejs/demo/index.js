@@ -15,8 +15,6 @@ function handleReq(req, res) {
 	}
 }
 
-
-
 var server = http.createServer(handleReq)
 
 server.listen(PORT, function() {

@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('handlebars', exphbs({ defaultLayout: 'main', partialsDir: "views/partials/" }));
 app.set('view engine', 'handlebars');
-app.use('/public', express.static('public'));
+app.use('/public', express.static('public'));   // allows access to css file
 
 app.get("/", function(req, res) {
     var tags = dataUtil.getAllTags(_DATA);
@@ -51,8 +51,8 @@ app.post('/create', function(req, res) {
 });
 
 app.get('/post/:slug', function(req, res) {
-    var _slug = req.params.slug;
-    var blog_post = _.findWhere(_DATA, { slug: _slug });
+    var _slug = req.params.slug;    // from request parameters
+    var blog_post = _.findWhere(_DATA, { slug: _slug });    // find all posts w/ slug tag
     if (!blog_post) return res.render('404');
     res.render('post', blog_post);
 });
@@ -66,7 +66,7 @@ app.get('/tag/:tag', function(req, res) {
             posts.push(post);
         }
     });
-    res.render('home', {
+    res.render('home', {    // use home handlebar to render the page
         tag: tag,
         data: posts,
         tags: tags

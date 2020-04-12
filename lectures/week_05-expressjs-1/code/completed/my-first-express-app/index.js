@@ -2,7 +2,9 @@ var express = require('express')
 var app = express()
 var bodyparser = require('body-parser');
 var operations = require("./factorial")
+var logger = require('morgan');
 
+app.use(logger('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
 

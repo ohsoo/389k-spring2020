@@ -1,1 +1,42 @@
-Home
+<div class="search-bar">
+    <input type="text" autocomplete="off" id="search_input" placeholder="Search">
+</div> 
+
+{{#if type}}
+	<h2>{{type}} items for sale:</h2> 
+{{else}}
+	{{#if alphabetical}}
+	<h2>Alphabetically Sorted:</h2>
+	{{else}}
+	<h2>All Listings:</h2>
+	{{/if}}
+	<h5>click for more</h5>
+{{/if}}
+
+{{#if data}}
+	<ul>
+		{{#each data}}
+		<li id="{{this.id}}" name={{this.item}}><a href="/listing/{{this.id}}"><h3>{{this.item}}</h3></a></li>
+		{{/each}}
+	</ul>
+{{else}}
+<article class="notice">
+	<h1>There are no items up for sale yet.</h1>
+	<a href="/newlisting">Create new listing!</a>
+</article>
+{{/if}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script><script type="text/javascript">
+	$("#search_input").keyup(function() {
+		var index, search, item;
+		search = $('#search_input').val().toLowerCase();
+
+		$('ul li').each(function() {
+			$(this).show()
+			item = $(this).text().toLowerCase()
+			if (item.indexOf(search) != 0) {
+				$(this).hide()
+			}
+		})
+	})
+</script>
